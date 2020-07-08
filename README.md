@@ -21,28 +21,24 @@ If you have installed this library, you can include it by navigating to *Sketch*
 Now you can actually use this library:
 ``` c++
 #include <ShiftOut.h>
-
-// Init ShiftOut instance with a single chip
-// If you want to use more shift registers, just modify this number
-ShiftOut<1> shift;
-
+// Init ShiftOut instance with a 5 chips
+// If you want to use more shift registers, just modify this number up to 8
+BaseShiftOut* shift;
 int led = 0;
 
 void setup() {
 	Serial.begin(9600);
-	// declare pins: data, clock, latch
-	shift.begin(4, 6, 5);
+	shift = new ShiftOut<5> (4, 6, 5);
 }
-
 void loop() {
-	shift.setAllLow(); // set all to zero
-	shift.setHigh(led); // set led to high
-	shift.write(); // write out to 74HC595
-	led = (led + 1) % shift.getDataWidth(); // increment led
+	shift->setAllLow();   // set all to zero
+	shift->setHigh(led); // set led to high
+	shift->write();     // write out to 74HC595
+	led = (led + 1) % shift->getDataWidth(); // increment led
 	delay(250); // wait a bit
 }
 ```
-![Breadboard layout for one shift register](ShiftOut/examples/ShiftRegister/layout.png)
+![Breadboard layout for one shift register](examples/ShiftRegister/layout.png)
 
 If you want to use two shift registers, you only have to change the declaration from `ShiftOut<1> shift;` to `ShiftOut<2> shift;` and then you just daisy chain your 74HC595.
 
@@ -60,17 +56,17 @@ Returns the number of outputs (bits in the state):
 uint16_t getDataWidth()
 ```
 
-Gets/sets the value of the output with the given `id`. The value should be either `0` or `1`:
+Gets/sets the value of the output with the given `nBit`. The value should be either `0` or `1`:
 ``` c++
-boolean get(int id)
-void set(int id, int value)
+boolean get(int nBit)
+void set(int nBit, int value)
 ```
 
-Sets/gets or inverts the output with the given `id`:
+Sets/gets or inverts the output with the given `nBit`:
 ``` c++
-void setHigh(int id)
-void setLow(int id)
-void invert(int id)
+void setHigh(int nBit)
+void setLow(int nBit)
+void invert(int nBit)
 ```
 
 Sets all outputs to high/low or inverts all:
@@ -80,12 +76,12 @@ void setAllLow()
 void invert()
 ```
 
-Finally writes out all data to the chips. *Must* be called to update the actual output. The state that was written out is returned:
+Finally writes out all data to the chips. *Must* be called to update the actual output:
 ``` c++
-ShiftType write()
+void write()
 ```
 
 Sets the state to the given parameter and calls `write()`:
 ```
-ShiftType write(ShiftType state)
+write(uint64_t data)
 ```

@@ -1,0 +1,10 @@
+.pio
+.idea
+/include/
+/lib/
+/test/
+cmake-build-debug
+cmake-build-esp12e
+.travis.yml
+CMakeLists.txt
+CMakeListsPrivate.txt

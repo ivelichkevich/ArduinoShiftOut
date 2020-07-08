@@ -1,0 +1,18 @@
+{
+    "name": "ArduinoShiftOut",
+    "keywords": "ShiftOut, 74HC595, register, shift, ArduinoShiftOut",
+    "description": "Arduino library that writes out values to an 8 bit shift register (74HC595).",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ivelichkevich/ArduinoShiftOut.git"
+    },
+    "version": "2.3",
+    "exclude": "tests",
+    "examples": "examples/*/*.ino",
+    "frameworks": "arduino",
+    "platforms": [
+        "atmelavr",
+        "espressif8266",
+        "espressif32"
+    ]
+}
