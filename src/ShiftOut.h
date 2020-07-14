@@ -96,4 +96,17 @@ template<> class ShiftOut<3> : public _ShiftOut<3, uint32_t> {
 template<> class ShiftOut<4> : public _ShiftOut<4, uint32_t> {
     public: ShiftOut(int data, int clock, int latch) : _ShiftOut(data, clock, latch) {}
 };
+
+BaseShiftOut* shiftOutFactory(byte chipCount, byte dataOut, byte clock, byte latch) {
+    switch (chipCount) {
+        case 1: return new ShiftOut<1>(dataOut, clock, latch);
+        case 2: return new ShiftOut<2>(dataOut, clock, latch);
+        case 3: return new ShiftOut<3>(dataOut, clock, latch);
+        case 4: return new ShiftOut<4>(dataOut, clock, latch);
+        case 5: return new ShiftOut<5>(dataOut, clock, latch);
+        case 6: return new ShiftOut<6>(dataOut, clock, latch);
+        case 7: return new ShiftOut<7>(dataOut, clock, latch);
+        case 8: return new ShiftOut<8>(dataOut, clock, latch);
+    }
+}
 #endif

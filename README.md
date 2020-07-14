@@ -29,6 +29,8 @@ int led = 0;
 void setup() {
 	Serial.begin(9600);
 	shift = new ShiftOut<5> (4, 6, 5);
+    // or
+    // shift = shiftOutFactory(5, 4, 6, 5);
 }
 void loop() {
 	shift->setAllLow();   // set all to zero
